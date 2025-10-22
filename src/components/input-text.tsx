@@ -2,10 +2,12 @@ import Icon from "./icon";
 import Text from "./text";
 import { tv, type VariantProps } from "tailwind-variants";
 
+//para colocar o erro e encapsula tudo
 export const inputTextContainerVariants = tv({
   base: "flex flex-col gap-1",
 });
 
+//encapsula o ícone e o input - borda
 export const inputTextWrapperVariants = tv({
   base: `
   border border-solid border-border-primary focus:border-border-active
@@ -44,6 +46,7 @@ export const inputTextIconVariants = tv({
   },
 });
 
+//no wrapper omite size e disabled do input - para não conflitar
 interface InputTextProps
   extends VariantProps<typeof inputTextWrapperVariants>,
     Omit<React.ComponentProps<"input">, "size" | "disabled"> {
