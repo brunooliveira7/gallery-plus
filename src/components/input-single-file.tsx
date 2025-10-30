@@ -40,25 +40,51 @@ interface InputSingleFileProps
     Omit<React.ComponentProps<"input">, "size"> {
   error?: React.ReactNode;
   form: any;
+  allowedExtensions: string[];
+  maxFileSizeInMB: number;
 }
 
 export default function InputSingleFile({
   size,
   error,
   form,
+  allowedExtensions,
+  maxFileSizeInMB,
   ...props
 }: InputSingleFileProps) {
   const formValues = useWatch({ control: form.control }); //consegue ver quais valores são alterados no form
   const name = props.name || "";
+
   //o arquivo do formulário
   const formFile: File = useMemo(
-    () => formValues[name]?.[0],
-    [formValues, name]
+    () => formValues[name]?.[0], //retorna o name
+    [formValues, name] //dependências
   );
+
+  //validação
+  const { fileExtension, fileSize } = useMemo(
+    () => ({
+      fileExtension: formFile?.name?.split(".").pop()?.toLowerCase() || "",
+      fileSize: formFile?.size || 0,
+    }),
+    [formFile]
+  );
+
+  function isValidExtension() {
+    return allowedExtensions.includes(fileExtension);
+  }
+
+  function isValidSize() {
+    return fileSize <= maxFileSizeInMB * 1024 * 1024;
+  }
+
+  function isValidFile() {
+    return isValidExtension() && isValidSize();
+  }
 
   return (
     <div>
-      {!formFile ? (
+      {!formFile || !isValidFile() ? (
         //parte que é exibida quando não há arquivo - quando não foi carregado
         <>
           <div className="w-full relative group cursor-pointer">
@@ -83,41 +109,55 @@ export default function InputSingleFile({
               </Text>
             </div>
           </div>
-          {error && (
-            <Text variant="label-small" className="text-accent-red">
-              Erro no campo
-            </Text>
-          )}
+          <div className="flex flex-col gap-1 mt-1">
+            {formFile && !isValidExtension() && (
+              <Text variant="label-small" className="text-accent-red">
+                Tipo de arquivo inválido
+              </Text>
+            )}
+            {formFile && !isValidSize() && (
+              <Text variant="label-small" className="text-accent-red">
+                O tamanho do arquivo é maior que o permitido
+              </Text>
+            )}
+            {error && (
+              <Text variant="label-small" className="text-accent-red">
+                {error}
+              </Text>
+            )}
+          </div>
         </>
       ) : (
         //parte que é exibida quando há arquivo - quando foi carregado
-        <div
-          className={`
+        <>
+          <div
+            className={`
         flex gap-3 items-center border border-solid border-border-primary 
         mt-5 p-3 rounded
         `}
-        >
-          <Icon svg={FileImageIcon} className="fill-white w-6 h-6" />
-          <div className="flex flex-col">
-            <div className="truncate max-w-80">
-              <Text variant="label-medium" className="text-placeholder">
-                {formFile.name}
-              </Text>
-            </div>
-            <div className="flex">
-              <button
-                type="button"
-                className={textVariants({
-                  variant: "label-small",
-                  className: "text-accent-red cursor-pointer hover:underline",
-                })}
-                onClick={() => form.setValue(name, undefined)} //remove o arquivo
-              >
-                Remover
-              </button>
+          >
+            <Icon svg={FileImageIcon} className="fill-white w-6 h-6" />
+            <div className="flex flex-col">
+              <div className="truncate max-w-80">
+                <Text variant="label-medium" className="text-placeholder">
+                  {formFile.name}
+                </Text>
+              </div>
+              <div className="flex">
+                <button
+                  type="button"
+                  className={textVariants({
+                    variant: "label-small",
+                    className: "text-accent-red cursor-pointer hover:underline",
+                  })}
+                  onClick={() => form.setValue(name, undefined)} //remove o arquivo
+                >
+                  Remover
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

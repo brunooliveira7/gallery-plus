@@ -12,7 +12,7 @@ import InputSingleFile from "./components/input-single-file";
 import { useForm } from "react-hook-form";
 
 export default function App() {
-  const form = useForm();
+  const form = useForm(); //passar o control
 
   return (
     <div className="grid gap-7 p-6">
@@ -65,7 +65,12 @@ export default function App() {
       </div>
 
       <div>
-        <InputSingleFile form={form} {...form.register("file")} />
+        <InputSingleFile
+          form={form}
+          allowedExtensions={["png", "jpg", "jpeg", "webp"]}
+          maxFileSizeInMB={50}
+          {...form.register("file")}
+        />
       </div>
     </div>
   );
