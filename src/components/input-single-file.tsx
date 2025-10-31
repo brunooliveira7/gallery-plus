@@ -42,6 +42,7 @@ interface InputSingleFileProps
   form: any;
   allowedExtensions: string[];
   maxFileSizeInMB: number;
+  replaceBy: React.ReactNode;
 }
 
 export default function InputSingleFile({
@@ -50,21 +51,22 @@ export default function InputSingleFile({
   form,
   allowedExtensions,
   maxFileSizeInMB,
+  replaceBy,
   ...props
 }: InputSingleFileProps) {
   const formValues = useWatch({ control: form.control }); //consegue ver quais valores são alterados no form
   const name = props.name || "";
 
-  //o arquivo do formulário
+  //o arquivo do formulário - memorizado o resultado
   const formFile: File = useMemo(
     () => formValues[name]?.[0], //retorna o name
     [formValues, name] //dependências
   );
 
-  //validação
+  //validação - que devolve um objeto - fileExtension, fileSize
   const { fileExtension, fileSize } = useMemo(
     () => ({
-      fileExtension: formFile?.name?.split(".").pop()?.toLowerCase() || "",
+      fileExtension: formFile?.name?.split(".").pop()?.toLowerCase() || "", //split- divide em dois arrays no ponto. pop-pega o ultimo índice do array[JPG]
       fileSize: formFile?.size || 0,
     }),
     [formFile]
@@ -91,7 +93,7 @@ export default function InputSingleFile({
             <input
               type="file"
               className={`absolute top-0 right-0 w-full h-full opacity-0
-          cursor-pointer`}
+              cursor-pointer`}
               {...props}
             />
             <div className={inputSingleFileVariants({ size })}>
@@ -130,10 +132,11 @@ export default function InputSingleFile({
       ) : (
         //parte que é exibida quando há arquivo - quando foi carregado
         <>
+          {replaceBy}
           <div
             className={`
-        flex gap-3 items-center border border-solid border-border-primary 
-        mt-5 p-3 rounded
+            flex gap-3 items-center border border-solid border-border-primary 
+            mt-5 p-3 rounded
         `}
           >
             <Icon svg={FileImageIcon} className="fill-white w-6 h-6" />
