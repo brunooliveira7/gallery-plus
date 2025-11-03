@@ -9,9 +9,9 @@ import { useMemo } from "react";
 
 export const inputSingleFileVariants = tv({
   base: `
-  flex flex-col items-center justify-center w-full border border-solid
-  border-border-primary group-hover:border-border-active rounded-lg
-  gap-1 transition
+      flex flex-col items-center justify-center w-full border border-solid
+      border-border-primary group-hover:border-border-active rounded-lg
+      gap-1 transition
   `,
   variants: {
     size: {
@@ -87,7 +87,7 @@ export default function InputSingleFile({
   return (
     <div>
       {!formFile || !isValidFile() ? (
-        //parte que é exibida quando não há arquivo - quando não foi carregado
+        //parte que é exibida quando não há arquivo - sem carregamento
         <>
           <div className="w-full relative group cursor-pointer">
             <input
@@ -130,14 +130,14 @@ export default function InputSingleFile({
           </div>
         </>
       ) : (
-        //parte que é exibida quando há arquivo - quando foi carregado
+        //parte que é exibida quando há arquivo - carregamento
         <>
-          {replaceBy}
+          {replaceBy} {/*onde carrega o preview*/}
           <div
             className={`
             flex gap-3 items-center border border-solid border-border-primary 
             mt-5 p-3 rounded
-        `}
+            `}
           >
             <Icon svg={FileImageIcon} className="fill-white w-6 h-6" />
             <div className="flex flex-col">

@@ -11,9 +11,13 @@ import InputCheckbox from "./components/input-checkbox";
 import InputSingleFile from "./components/input-single-file";
 import { useForm } from "react-hook-form";
 import ImageFilePreview from "./components/image-file-preview";
+import { Dialog, DialogContent } from "./components/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import Text from "./components/text";
 
 export default function App() {
   const form = useForm(); //passar o control
+
   const file = form.watch("file");
   const fileSRC = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
 
@@ -72,9 +76,21 @@ export default function App() {
           form={form}
           allowedExtensions={["png", "jpg", "jpeg", "webp"]}
           maxFileSizeInMB={50}
-          replaceBy={<ImageFilePreview src={fileSRC} alt="Imagem"/>}
+          replaceBy={<ImageFilePreview src={fileSRC} alt="Imagem" />}
           {...form.register("file")}
         />
+      </div>
+
+      <div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Abrir Modal</Button>
+          </DialogTrigger>
+
+          <DialogContent>
+            <Text>Teste modal</Text>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
