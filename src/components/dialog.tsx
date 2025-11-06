@@ -77,7 +77,7 @@ export function DialogHeader({
       <header
         className={cn(
           `
-            flex items-center justify-between
+           flex items-center justify-between
           `,
           className
         )}
@@ -89,9 +89,11 @@ export function DialogHeader({
           </Text>
         </DialogPrimitive.Title>
         <DialogClose asChild>
+          {/*asChild = renderiza o filho - button */}
           <ButtonIcon icon={XIcon} variant="ghost" />
         </DialogClose>
       </header>
+
       <Divider className="mt-1.5 mb-5" />
     </>
   );
@@ -111,6 +113,7 @@ export function DialogFooter({
   return (
     <div {...props}>
       <Divider className="mt-5 mb-1.5" />
+      
       <footer className="flex items-center justify-end gap-3">
         {children}
       </footer>
