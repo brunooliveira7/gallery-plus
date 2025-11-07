@@ -21,7 +21,7 @@ import {
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import Text from "../components/text";
 
-export default function App() {
+export default function PageComponents() {
   const form = useForm(); //passar o control
 
   const file = form.watch("file");
