@@ -6,6 +6,7 @@ import { debounce } from "../helpers/utils";
 export function PhotosSearch() {
   const [inputValue, setInputValue] = useState("");
 
+  //guardando 
   const debouncedSetValue = useCallback(
     debounce(
       (value: string) => console.log("Valor com debouce: ", value),
@@ -16,7 +17,7 @@ export function PhotosSearch() {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
-    
+
     setInputValue(value);
     debouncedSetValue(value);
   }
