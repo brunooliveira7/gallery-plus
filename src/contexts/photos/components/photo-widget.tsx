@@ -8,22 +8,24 @@ import type { Photo } from "../models/photo";
 
 interface PhotoWidgetProps {
   photo: Photo;
-  loading?: boolean; //skeleton
+  loading?: boolean; //para criar os skeleton
 }
 
 export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
   return (
+    //Nao foi usado o cv porque não tem variação
     <div className="flex flex-col gap-4">
       {!loading ? (
         <ImagePreview
           src={`/images/${photo.imageId}`}
           title={photo.title}
-          imageClassName="w-[13.5625rem] h-[13.5625rem] rounded-lg"
+          imageClassName="w-[10.875rem] h-[10.875rem] rounded-lg"
         />
       ) : (
-        <Skeleton className="w-[13.56255rem] h-[13.5625rem] rounded-lg" />
+        <Skeleton className="w-[10.875rem] h-[10.875rem] rounded-lg" />
       )}
 
+      {/*Título e badges*/}
       <div className="flex flex-col gap-2">
         {!loading ? (
           <Text variant="paragraph-large" className="truncate">
@@ -33,17 +35,17 @@ export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
           <Skeleton className="w-full h-6" />
         )}
 
-        {/*Para não estourar os badges no espaço*/}
+        {/*Badges - Para não estourar os espaços - fica só 1 álbuns*/}
         <div className="flex gap-1 min-h-[1.375rem]">
           {!loading ? (
             <>
-              {photo.albums.slice(0, 2).map((album) => (
+              {photo.albums.slice(0, 1).map((album) => (
                 <Badge className="truncate" size="xs" key={album.id}>
                   {album.title}
                 </Badge>
               ))}
-              {photo.albums.length > 2 && (
-                <Badge size="xs">+ {photo.albums.length - 2}</Badge>
+              {photo.albums.length > 1 && (
+                <Badge size="xs">+ {photo.albums.length - 1}</Badge>
               )}
             </>
           ) : (
@@ -57,6 +59,7 @@ export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
         </div>
       </div>
 
+      {/*Botão*/}
       {!loading ? (
         <Link
           to={`/fotos/${photo.id}`}
