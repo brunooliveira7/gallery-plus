@@ -25,6 +25,7 @@ export default function PhotosList({ photos, loading }: PhotoListProps) {
         )}
       </Text>
 
+      {/*Lista de fotos */}
       {!loading && photos?.length > 0 && (
         <div className="grid grid-cols-5 gap-9">
           {photos.map((photo) => (
@@ -45,8 +46,8 @@ export default function PhotosList({ photos, loading }: PhotoListProps) {
           ))}
         </div>
       )}
-      {/*Tratamento de erro */}
 
+      {/*Tratamento de erro */}
       {!loading && photos?.length === 0 && (
         <div className="flex justify-center items-center h-full">
           <Text variant="paragraph-large">Nenhuma foto encontrada</Text>
