@@ -43,7 +43,7 @@ export default function PhotosNavigator({
       ) : (
         <>
           <Skeleton className="w-10 h-10" />
-          <Skeleton className="w-200 h-10" />
+          <Skeleton className="w-20 h-10" />
         </>
       )}
     </div>
