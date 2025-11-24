@@ -49,6 +49,7 @@ export default function PagePhotoDetails() {
       </header>
 
       <div className="grid grid-cols-[21rem_1fr] gap-24">
+        {/*parte da imagem e botão excluir*/}
         <div className="space-y-3">
           {!isLoadingPhoto ? (
             <ImagePreview
@@ -67,7 +68,7 @@ export default function PagePhotoDetails() {
           )}
         </div>
 
-        {/*parte do álbum*/}
+        {/*parte da lista de álbum*/}
         <div className="py-3">
           <Text as="h3" variant="heading-medium" className="mb-6">
             Álbum

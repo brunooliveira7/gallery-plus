@@ -12,15 +12,16 @@ interface AlbumListSelectableProps {
 }
 
 export default function AlbumListSelectable({
+  loading,
   albums,
   photo,
-  loading,
 }: AlbumListSelectableProps) {
   //se na minha foto tem algum dos álbum - marca check
   function isChecked(albumId: string) {
     return photo?.albums?.some((album) => album.id === albumId);
   }
 
+  //gerenciar a quais álbuns uma foto pertence
   function handlePhotoOnAlbums(albumId: string) {
     let albumsIds = [];
 
@@ -52,7 +53,7 @@ export default function AlbumListSelectable({
                 onClick={() => handlePhotoOnAlbums(album.id)}
               />
             </div>
-            {/*se for diferente do último coloco o divider */}
+            {/*se for diferente do último item - coloca o divider */}
             {index !== albums.length - 1 && <Divider className="mt-4" />}
           </li>
         ))}
