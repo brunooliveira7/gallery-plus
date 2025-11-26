@@ -42,6 +42,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   ];
   return (
     <Dialog>
+      {/*é o que faz abrir o nosso componente no click */}
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>Adicionar foto</DialogHeader>
@@ -50,9 +51,9 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
           <InputText placeholder="Adicione um título" maxLength={255} />
 
           <Alert>
-            Tamanho máximo: 50MB
+            Tamanho máximo: 50MB.
             <br />
-            Você pode selecionar arquivos em PNG, JPG ou JPEG
+            Você pode selecionar arquivos em PNG, JPG ou JPEG.
           </Alert>
 
           <InputSingleFile
@@ -94,6 +95,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
           <DialogClose asChild>
             <Button variant="secondary"> Cancelar</Button>
           </DialogClose>
+
           <Button>Adicionar</Button>
         </DialogFooter>
       </DialogContent>

@@ -107,7 +107,7 @@ export default function InputSingleFile({
               >
                 Arraste o arquivo arquivo
                 <br />
-                ou clique aqui para selecionar
+                ou clique aqui para selecionar.
               </Text>
             </div>
           </div>
