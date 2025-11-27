@@ -24,6 +24,7 @@ export default function PhotoImageSelectable({
   onSelectImage,
   ...props
 }: PhotoImageSelectableProps) {
+  //para utilizar o selected e manipular - sem alterar o valor de props
   const [isSelected, setIsSelected] = useState(selected);
 
   function handleSelect() {
