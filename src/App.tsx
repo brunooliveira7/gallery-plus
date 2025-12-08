@@ -3,9 +3,13 @@ import PageComponents from "./pages/page-componentes.tsx";
 import LayoutMain from "./pages/layout-main.tsx";
 import PageHome from "./pages/page-home.tsx";
 import PagePhotoDetails from "./pages/page-photo-details.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Routes>
         <Route element={<LayoutMain />}>
@@ -15,5 +19,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 }
