@@ -7,10 +7,13 @@ import PhotosNavigator from "../contexts/photos/components/photos-navigator";
 import ImagePreview from "../components/image-preview";
 import Button from "../components/button";
 import AlbumListSelectable from "../contexts/albums/components/albums-list-selectable";
+import useAlbums from "../contexts/albums/hooks/use-albums";
 
 export default function PagePhotoDetails() {
   //para capturar o :id da rota
   const { id } = useParams();
+
+  const { albums, isLoadingAlbums } = useAlbums();
 
   //apenas para fazer o test do mock
   const isLoadingPhoto = false;
@@ -76,20 +79,8 @@ export default function PagePhotoDetails() {
 
           <AlbumListSelectable
             photo={photo}
-            albums={[
-              {
-                id: "3421",
-                title: "Album 1",
-              },
-              {
-                id: "456",
-                title: "Album 2",
-              },
-              {
-                id: "789",
-                title: "Album 3",
-              },
-            ]}
+            albums={albums}
+            loading={isLoadingAlbums}
           />
         </div>
       </div>
