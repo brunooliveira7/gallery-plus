@@ -1,48 +1,33 @@
 import Container from "../components/container";
 import Text from "../components/text";
 import { useParams } from "react-router";
-import type { Photo } from "../contexts/photos/models/photo";
 import Skeleton from "../components/skeleton";
 import PhotosNavigator from "../contexts/photos/components/photos-navigator";
 import ImagePreview from "../components/image-preview";
 import Button from "../components/button";
 import AlbumListSelectable from "../contexts/albums/components/albums-list-selectable";
 import useAlbums from "../contexts/albums/hooks/use-albums";
+import usePhoto from "../contexts/photos/hooks/use-photo";
+import type { Photo } from "../contexts/photos/models/photo";
 
 export default function PagePhotoDetails() {
   //para capturar o :id da rota
   const { id } = useParams();
 
+  const { photo, isLoadingPhoto } = usePhoto(id);
+
   const { albums, isLoadingAlbums } = useAlbums();
 
-  //apenas para fazer o test do mock
-  const isLoadingPhoto = false;
-  const photo = {
-    id: "123",
-    title: "Olá mundo!",
-    imageId: "portrait-tower.png",
-    albums: [
-      {
-        id: "3421",
-        title: "Album 1",
-      },
-      {
-        id: "456",
-        title: "Album 2",
-      },
-      {
-        id: "789",
-        title: "Album 3",
-      },
-    ],
-  } as Photo;
+  if (isLoadingPhoto || isLoadingAlbums) {
+    return <div>Foto não encontrada</div>;
+  }
 
   return (
     <Container>
       <header className="flex items-center justify-between gap-8 mb-8">
         {!isLoadingPhoto ? (
           <Text as="h2" variant="heading-large">
-            {photo.title}
+            {photo?.title}
           </Text>
         ) : (
           <Skeleton className="w-48 h-8" />
@@ -56,8 +41,8 @@ export default function PagePhotoDetails() {
         <div className="space-y-3">
           {!isLoadingPhoto ? (
             <ImagePreview
-              src={`/images/${photo?.imageId}`}
-              title={photo.title}
+              src={`${import.meta.env.VITE_IMAGES_URL}/${photo?.imageId}`}
+              title={photo?.title}
               imageClassName="h-[21rem]"
             />
           ) : (
@@ -78,7 +63,7 @@ export default function PagePhotoDetails() {
           </Text>
 
           <AlbumListSelectable
-            photo={photo}
+            photo={photo as Photo}
             albums={albums}
             loading={isLoadingAlbums}
           />
