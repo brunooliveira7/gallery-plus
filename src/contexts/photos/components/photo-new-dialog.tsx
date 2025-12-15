@@ -18,12 +18,16 @@ import Text from "../../../components/text";
 import useAlbums from "../../albums/hooks/use-albums";
 import { photoNewFormSchema, type PhotoNewFormSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 
 interface PhotoNewDialogProps {
   trigger: React.ReactNode;
 }
 
 export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
+  //estado para controlar a abertura e fechamento do modal
+  const [modalOpen, setModalOpen] = useState(false);
+
   const form = useForm<PhotoNewFormSchema>({
     resolver: zodResolver(photoNewFormSchema),
   });
@@ -33,12 +37,19 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   const file = form.watch("file");
   const fileSource = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
 
+  //apagando os dados do formulário ao cancelar add de foto
+  useEffect(() => {
+    if (!modalOpen) {
+      form.reset();
+    }
+  }, [modalOpen, form]);
+
   function handleSubmit(payload: PhotoNewFormSchema) {
     console.log(payload);
   }
 
   return (
-    <Dialog>
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       {/*é o que faz abrir o nosso componente no click */}
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>

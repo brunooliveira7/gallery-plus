@@ -4,7 +4,7 @@ export const photoNewFormSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }).max(255),
   file: z
     .instanceof(FileList)
-    .refine((file) => file.length > 0, { message: "File is required" }),
+    .refine((file) => file.length > 0, { message: "File is required." }),
   albumIds: z.array(z.string().uuid()).optional(),
 });
 
