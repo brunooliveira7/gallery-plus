@@ -18,16 +18,22 @@ import Text from "../../../components/text";
 import useAlbums from "../../albums/hooks/use-albums";
 import { photoNewFormSchema, type PhotoNewFormSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import usePhoto from "../hooks/use-photo";
 
 interface PhotoNewDialogProps {
   trigger: React.ReactNode;
 }
 
 export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
-  //estado para controlar a abertura e fechamento do modal
+  //estado para controlar a abertura e fechamento do modal e limpar
   const [modalOpen, setModalOpen] = useState(false);
 
+  const { createPhoto } = usePhoto();
+
+  const [isCreatingPhoto, setIsCreatingPhoto] = useTransition();
+
+  //biblioteca react-hook-form - validação de dados
   const form = useForm<PhotoNewFormSchema>({
     resolver: zodResolver(photoNewFormSchema),
   });
@@ -37,6 +43,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   const file = form.watch("file");
   const fileSource = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
 
+  //para setar as cores
   const albumsIds = form.watch("albumIds");
 
   //apagando os dados do formulário ao cancelar add de foto
@@ -46,6 +53,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
     }
   }, [modalOpen, form]);
 
+  //selecionando o albums no modal
   function handleToggleAlbum(albumId: string) {
     const albumsIds = form.getValues("albumIds") || [];
     const albumsSet = new Set(albumsIds); //set - faz array sem valores repetidos
@@ -61,7 +69,10 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   }
 
   function handleSubmit(payload: PhotoNewFormSchema) {
-    console.log(payload);
+    setIsCreatingPhoto(async () => {
+      await createPhoto(payload);
+      setModalOpen(false);
+    });
   }
 
   return (
@@ -130,10 +141,18 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="secondary"> Cancelar</Button>
+              <Button variant="secondary" disabled={isCreatingPhoto}>
+                Cancelar
+              </Button>
             </DialogClose>
 
-            <Button type="submit">Adicionar</Button>
+            <Button
+              disabled={isCreatingPhoto}
+              handling={isCreatingPhoto}
+              type="submit"
+            >
+              {isCreatingPhoto ? "Acionando..." : "Adicionar"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
