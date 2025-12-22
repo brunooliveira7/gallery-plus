@@ -20,12 +20,12 @@ export default function usePhoto(id?: string) {
   //fazendo a requisição na API para criar nova foto
   async function createPhoto(payload: PhotoNewFormSchema) {
     try {
-      //cria a foto
+      //post cria a foto - resposta da API é armazenar em photo
       const { data: photo } = await api.post<Photo>("/photos", {
         title: payload.title,
       });
 
-      //sobe a imagem
+      //post envia a imagem - fazer upload
       await api.post(
         `/photos/${photo.id}/image`,
         {
@@ -39,9 +39,9 @@ export default function usePhoto(id?: string) {
       );
 
       //se tiver album atualiza
-      if (payload.albumIds && payload.albumIds.length > 0) {
+      if (payload.albumsIds && payload.albumsIds.length > 0) {
         await api.put(`/photos/${photo.id}/albums`, {
-          albumIds: payload.albumIds,
+          albumsIds: payload.albumsIds,
         });
       }
 

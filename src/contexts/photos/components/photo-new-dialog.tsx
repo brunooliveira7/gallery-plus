@@ -31,6 +31,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 
   const { createPhoto } = usePhoto();
 
+  //useTransition permite que a criação da foto aconteça em segundo plano sem travar a tela
   const [isCreatingPhoto, setIsCreatingPhoto] = useTransition();
 
   //biblioteca react-hook-form - validação de dados
@@ -44,7 +45,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   const fileSource = file?.[0] ? URL.createObjectURL(file[0]) : undefined;
 
   //para setar as cores
-  const albumsIds = form.watch("albumIds");
+  const albumsIds = form.watch("albumsIds");
 
   //apagando os dados do formulário ao cancelar add de foto
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
 
   //selecionando o albums no modal
   function handleToggleAlbum(albumId: string) {
-    const albumsIds = form.getValues("albumIds") || [];
+    const albumsIds = form.getValues("albumsIds") || [];
     const albumsSet = new Set(albumsIds); //set - faz array sem valores repetidos
 
     //se na lista já tem o id - apaga, se não tem vai adicionar
@@ -65,7 +66,7 @@ export default function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
       albumsSet.add(albumId);
     }
 
-    form.setValue("albumIds", Array.from(albumsSet)); //transforma o set em array novamente
+    form.setValue("albumsIds", Array.from(albumsSet)); //transforma o set em array novamente
   }
 
   function handleSubmit(payload: PhotoNewFormSchema) {
