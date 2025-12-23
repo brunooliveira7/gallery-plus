@@ -1,6 +1,6 @@
 # Gallery Plus
 
-## ...
+## Gallery Plus
 
 Run the install command
 
