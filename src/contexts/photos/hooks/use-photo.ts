@@ -3,6 +3,7 @@ import { api, fetcher } from "../../../helpers/api";
 import type { Photo } from "../models/photo";
 import type { PhotoNewFormSchema } from "../schemas";
 import { toast } from "sonner";
+import usePhotoAlbums from "./use-photo-albums";
 
 interface PhotoDetailResponse extends Photo {
   nextPhotoId?: string;
@@ -17,6 +18,8 @@ export default function usePhoto(id?: string) {
   });
 
   const queryClient = useQueryClient();
+
+  const { managePhotoOnAlbum } = usePhotoAlbums();
 
   //fazendo a requisição na API para criar nova foto
   async function createPhoto(payload: PhotoNewFormSchema) {
@@ -41,9 +44,7 @@ export default function usePhoto(id?: string) {
 
       //se tiver album atualiza
       if (payload.albumsIds && payload.albumsIds.length > 0) {
-        await api.put(`/photos/${photo.id}/albums`, {
-          albumsIds: payload.albumsIds,
-        });
+        await managePhotoOnAlbum(photo.id, payload.albumsIds);
       }
 
       //invalidar o cache
