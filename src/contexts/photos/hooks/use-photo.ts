@@ -4,6 +4,7 @@ import type { Photo } from "../models/photo";
 import type { PhotoNewFormSchema } from "../schemas";
 import { toast } from "sonner";
 import usePhotoAlbums from "./use-photo-albums";
+import { useNavigate } from "react-router";
 
 interface PhotoDetailResponse extends Photo {
   nextPhotoId?: string;
@@ -20,6 +21,8 @@ export default function usePhoto(id?: string) {
   const queryClient = useQueryClient();
 
   const { managePhotoOnAlbum } = usePhotoAlbums();
+
+  const navigate = useNavigate();
 
   //fazendo a requisição na API para criar nova foto
   async function createPhoto(payload: PhotoNewFormSchema) {
@@ -61,11 +64,25 @@ export default function usePhoto(id?: string) {
     }
   }
 
+  async function deletePhoto(photoId: string) {
+    try {
+      await api.delete(`/photos/${photoId}`);
+
+      toast.success("Foto excluída com sucesso!");
+
+      navigate("/");
+    } catch (error) {
+      toast.error("Erro ao excluir foto!");
+      throw error;
+    }
+  }
+
   return {
     photo: data,
     nextPhotoId: data?.nextPhotoId,
     previousPhotoId: data?.previousPhotoId,
     isLoadingPhoto: isLoading,
     createPhoto,
+    deletePhoto,
   };
 }
