@@ -6,7 +6,6 @@ import Text from "../../../components/text";
 import usePhotoAlbums from "../../photos/hooks/use-photo-albums";
 import type { Photo } from "../../photos/models/photo";
 import type { Album } from "../models/album";
-import { set } from "react-hook-form";
 
 interface AlbumListSelectableProps {
   loading?: boolean;
