@@ -1,121 +1,112 @@
 # 📷 Gallery Plus
 
-**Gallery Plus** é uma aplicação web robusta de galeria de fotos, desenvolvida com **React** e **TypeScript**, projetada para oferecer uma experiência de usuário fluida, moderna e performática.
+**Gallery Plus** is a robust photo gallery web application built with **React** and **TypeScript**, designed to deliver a smooth, modern, and high-performance user experience.
 
-O projeto foca na **organização eficiente de imagens por álbuns**, com recursos avançados de **upload**, **validação de dados** e **gerenciamento de estado sincronizado com a URL**, garantindo ótima DX e UX.
-
----
-
-## 🚀 Funcionalidades
-
-### 📸 Gerenciamento de Fotos
-
-* **Upload de Imagens**
-  Interface amigável para envio de novas fotos, com suporte aos formatos **PNG**, **JPG** e **JPEG**.
-
-* **Validação Rigorosa**
-  Validação automática de:
-
-  * Formato do arquivo
-  * Tamanho máximo de **50MB**
-    garantindo a integridade dos dados antes do envio.
-
-* **Visualização Imersiva**
-  Ao clicar em uma foto, o usuário acessa uma visualização detalhada com:
-
-  * Navegação para **foto anterior** e **próxima**
-  * Experiência contínua, sem necessidade de voltar à listagem
-
-* **Exclusão Segura**
-  Remoção de fotos com:
-
-  * Feedback imediato
-  * Redirecionamento automático após a ação
+The project focuses on **efficient image organization through albums**, featuring advanced **upload capabilities**, **data validation**, and **URL-synchronized state management**, ensuring an excellent **DX** and **UX**.
 
 ---
 
-### 📂 Organização de Álbuns
+## 🚀 Features
 
-* **Criação de Álbuns**
-  Modal intuitivo para criar novos álbuns, permitindo:
+### 📸 Photo Management
 
-  * Definir título
-  * Selecionar fotos existentes para inclusão imediata
+- **Image Upload**  
+  User-friendly interface for uploading new photos, with support for **PNG**, **JPG**, and **JPEG** formats.
 
-* **Associação Flexível**
-  Durante o upload de uma nova foto, é possível associá-la a **múltiplos álbuns simultaneamente**.
+- **Strict Validation**  
+  Automatic validation of:
+  - File format  
+  - Maximum size of **50MB**  
+  ensuring data integrity before submission.
 
-* **Gestão de Conteúdo**
-  Facilidade para:
+- **Immersive Preview**  
+  When clicking on a photo, users access a detailed view with:
+  - **Previous** and **next** photo navigation  
+  - A continuous experience without returning to the listing
 
-  * Adicionar fotos a álbuns existentes
-  * Remover fotos de álbuns
-
----
-
-### 🔍 Busca e Navegação (DX / UX)
-
-* **Estado Sincronizado na URL (URL State)**
-  Utilização da biblioteca **nuqs** para sincronizar filtros (como termo de busca e ID do álbum) diretamente na URL, permitindo:
-
-  * Compartilhamento de links
-  * Abertura da aplicação exatamente no mesmo estado de visualização
-
-* **Feedback Visual**
-  Uso de **Toasts** (via **Sonner**) para notificar o usuário sobre:
-
-  * Sucesso de ações (ex: *"Foto criada com sucesso!"*)
-  * Erros (ex: *"Erro ao excluir foto"*)
-
-* **Carregamento Otimizado**
-  Implementação de **Skeletons** para indicar carregamento de dados e melhorar a percepção de performance.
-
-* **Transições Suaves**
-  Uso do hook `useTransition` do React para manter a interface responsiva durante:
-
-  * Operações pesadas
-  * Atualizações de estado assíncronas
+- **Safe Deletion**  
+  Photo removal with:
+  - Immediate feedback  
+  - Automatic redirection after the action
 
 ---
 
-## 🛠️ Stack Tecnológica
+### 📂 Album Organization
 
-A aplicação foi construída com um conjunto moderno de ferramentas focadas em **performance**, **escalabilidade** e **manutenibilidade**.
+- **Album Creation**  
+  Intuitive modal for creating new albums, allowing users to:
+  - Set a title  
+  - Select existing photos for immediate inclusion
+
+- **Flexible Association**  
+  During photo upload, it is possible to associate the image with **multiple albums simultaneously**.
+
+- **Content Management**  
+  Easy ways to:
+  - Add photos to existing albums  
+  - Remove photos from albums
+
+---
+
+### 🔍 Search & Navigation (DX / UX)
+
+- **URL-Synchronized State (URL State)**  
+  Uses the **nuqs** library to synchronize filters (such as search term and album ID) directly with the URL, enabling:
+  - Link sharing  
+  - Opening the application in the exact same view state
+
+- **Visual Feedback**  
+  **Toasts** (via **Sonner**) notify users about:
+  - Successful actions (e.g., *"Photo created successfully!"*)  
+  - Errors (e.g., *"Error deleting photo"*)
+
+- **Optimized Loading**  
+  **Skeletons** are used to indicate data loading and improve perceived performance.
+
+- **Smooth Transitions**  
+  React’s `useTransition` hook is used to keep the interface responsive during:
+  - Heavy operations  
+  - Asynchronous state updates
+
+---
+
+## 🛠️ Tech Stack
+
+The application was built with a modern set of tools focused on **performance**, **scalability**, and **maintainability**.
 
 ### ⚙️ Core
 
-* **React 18+**
-* **Vite** — desenvolvimento rápido e build otimizado
-* **TypeScript** — tipagem estática e maior segurança no código
+- **React 18+**
+- **Vite** — fast development and optimized builds
+- **TypeScript** — static typing and improved code safety
 
-### 📦 Gerenciamento de Dados e Estado
+### 📦 Data & State Management
 
-* **TanStack Query (React Query)**
+- **TanStack Query (React Query)**
+  - Smart caching  
+  - Automatic query invalidation  
+  - Optimistic updates
 
-  * Cache inteligente
-  * Invalidação automática de queries
-  * Atualizações otimistas
+- **Nuqs** — type-safe URL query state management
 
-* **Nuqs** — gerenciamento de estado via *query params* da URL (type-safe)
+- **Axios** — HTTP requests
 
-* **Axios** — requisições HTTP
+### 🎨 UI & Styling
 
-### 🎨 Interface e Estilização
+- **Tailwind CSS** — utility-first, responsive styling
+- **Radix UI** — accessible components (Dialogs, etc.)
+- **Sonner** — toast notifications
 
-* **Tailwind CSS** — estilização utilitária e responsiva
-* **Radix UI** — componentes acessíveis (Dialogs, etc.)
-* **Sonner** — notificações Toast
+### 📝 Forms & Validation
 
-### 📝 Formulários e Validação
-
-* **React Hook Form** — gerenciamento performático de formulários
-* **Zod** — validação de esquemas de dados (*schema validation*)
+- **React Hook Form** — high-performance form management
+- **Zod** — schema-based data validation
 
 ---
 
-## ⚙️ Como Executar o Projeto
+## ⚙️ Running the Project
 
-### 1️⃣ Instale as dependências
+### 1️⃣ Install dependencies
 
 ```bash
 pnpm install
